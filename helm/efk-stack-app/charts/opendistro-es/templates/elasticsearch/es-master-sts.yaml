@@ -65,11 +65,16 @@ spec:
       - name: init-sysctl
         image: {{ .Values.global.registry }}/{{ .Values.elasticsearch.initContainer.image }}:{{ .Values.elasticsearch.initContainer.imageTag }}
         command:
-        - sysctl
-        - -w
-        - vm.max_map_count={{ .Values.elasticsearch.maxMapCount }}
+        - sh
+        - -c
+        - |
+          set -o errexit ; set -o xtrace ; set -o nounset
+
+          sudo sysctl -w - vm.max_map_count={{ .Values.elasticsearch.maxMapCount }}
         securityContext:
           privileged: true
+          runAsUser: 1000
+          runAsGroup: 1000
 {{- end }}
 {{- if .Values.elasticsearch.fixmount.enabled }}
       - name: fixmount

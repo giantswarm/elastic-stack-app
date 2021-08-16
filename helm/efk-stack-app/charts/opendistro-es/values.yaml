@@ -206,8 +206,8 @@ elasticsearch:
   #   readOnly: true
 
   initContainer:
-    image: busybox
-    imageTag: 1.27.2
+    image: giantswarm/alpine
+    imageTag: 3.12-giantswarm-sysctl
 
   ## Set optimal sysctl's. This requires privilege. Can be disabled if
   ## the system has already been preconfigured.

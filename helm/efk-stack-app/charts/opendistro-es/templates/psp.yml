@@ -20,7 +20,11 @@ metadata:
 {{ include "opendistro-es.labels.standard" . | indent 4 }}
   name: {{ template "opendistro-es.fullname" . }}-psp
 spec:
+{{- if .Values.elasticsearch.sysctl.enabled }}
   privileged: true
+{{- else }}
+  privileged: false
+{{- end }}
   #requiredDropCapabilities:
   volumes:
     - 'configMap'
